@@ -1,0 +1,18 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 17, 17, 0.5);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+}
+
+.dialog {
+  background: #fff;
+  width: min(960px, 92vw);
+  max-height: 88vh;
+  overflow: auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.2);
+  padding: 16px;
+}

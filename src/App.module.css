@@ -1,0 +1,50 @@
+.loading {
+  padding: 20px;
+  font-size: 16px;
+  color: #6b7280;
+}
+
+.loginPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  gap: 16px;
+  background: #f9fafb;
+}
+
+.loginTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  height: 100vh;
+  background-color: #f3f4f6;
+}
+
+.main {
+  overflow: auto;
+  background: #f9fafb;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+}

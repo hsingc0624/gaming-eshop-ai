@@ -1,0 +1,28 @@
+.page {
+  padding: 24px;
+}
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table th,
+.table td {
+  padding: 12px 8px;
+  border-bottom: 1px solid #eee;
+}
+.linkBtn {
+  color: #2563eb;
+  text-decoration: none;
+}
+.linkBtn:hover {
+  text-decoration: underline;
+}
+.muted {
+  color: #888;
+  padding: 16px;
+}
