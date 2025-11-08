@@ -6,33 +6,44 @@ import {
   updateUserRole,
   updateUserActive,
   createUser,
-} from "../lib/usersApi";
-
-import UsersFilters from "../components/users/UsersFilters";
-import UserRow from "../components/users/UserRow";
-import CreateUserModal from "../components/users/CreateUserModal";
+} from "../../lib/usersApi";
+import UsersFilters from "../../components/users/UsersFilters";
+import UserRow from "../../components/users/UserRow";
+import CreateUserModal from "../../components/users/CreateUserModal";
+import { useAuthErrorHandler } from "../../hooks/useAuthErrorHandler";
 
 export default function Users() {
   const [rows, setRows] = useState([]);
   const [roles, setRoles] = useState(["Admin", "Staff", "Viewer"]);
   const [filters, setFilters] = useState({ role: "", status: "" });
   const [loading, setLoading] = useState(true);
-
   const [creatingOpen, setCreatingOpen] = useState(false);
+
+  const handleAuthError = useAuthErrorHandler();
 
   useEffect(() => {
     (async () => {
-      const r = await fetchRoles();
-      if (r.length) setRoles(r);
+      try {
+        const r = await fetchRoles();
+        if (r.length) setRoles(r);
+      } catch (err) {
+        handleAuthError(err);
+      }
     })();
   }, []);
 
   async function load() {
     setLoading(true);
-    const data = await fetchUsers(filters);
-    setRows(data);
-    setLoading(false);
+    try {
+      const data = await fetchUsers(filters);
+      setRows(data);
+    } catch (err) {
+      handleAuthError(err);
+    } finally {
+      setLoading(false);
+    }
   }
+
   useEffect(() => {
     load();
   }, [filters.role, filters.status]);
@@ -42,9 +53,9 @@ export default function Users() {
     setRows((r) => r.map((u) => (u.id === id ? { ...u, role: newRole } : u)));
     try {
       await updateUserRole(id, newRole);
-    } catch {
+    } catch (err) {
       setRows(prev);
-      alert("Failed to update role");
+      handleAuthError(err);
     }
   }
 
@@ -53,9 +64,9 @@ export default function Users() {
     setRows((r) => r.map((u) => (u.id === id ? { ...u, is_active: next } : u)));
     try {
       await updateUserActive(id, next);
-    } catch {
+    } catch (err) {
       setRows(prev);
-      alert("Failed to update status");
+      handleAuthError(err);
     }
   }
 

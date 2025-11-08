@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { api } from "../lib/api";
 import styles from "./ProductsTable.module.css";
 
 function currency(cents) {
@@ -12,7 +14,23 @@ function sumStock(variants = []) {
   return variants.reduce((n, v) => n + (Number(v?.stock) || 0), 0);
 }
 
-export default function ProductsTable({ rows = [] }) {
+export default function ProductsTable({ rows = [], onDelete }) {
+  const [deletingId, setDeletingId] = useState(null);
+
+  async function handleDelete(p) {
+    if (!window.confirm(`Delete "${p.name}"? This cannot be undone.`)) return;
+    try {
+      setDeletingId(p.id);
+      await api.delete(`/api/products/${p.id}`);
+      onDelete?.(p.id);
+    } catch (e) {
+      console.error(e);
+      alert(e?.response?.data?.message || "Failed to delete product");
+    } finally {
+      setDeletingId(null);
+    }
+  }
+
   return (
     <div className={styles.wrapper}>
       <table className={styles.table}>
@@ -22,6 +40,7 @@ export default function ProductsTable({ rows = [] }) {
             <th className={styles.th}>Price</th>
             <th className={styles.th}>Stock</th>
             <th className={styles.th}>Status</th>
+            <th className={styles.th} style={{ textAlign: "right" }}>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -54,13 +73,24 @@ export default function ProductsTable({ rows = [] }) {
                     {p.is_active ? "Active" : "Inactive"}
                   </span>
                 </td>
+                <td className={`${styles.td} ${styles.actionsCell}`}>
+                  <button
+                    className={styles.btnDanger}
+                    onClick={() => handleDelete(p)}
+                    disabled={deletingId === p.id}
+                    title="Delete product"
+                    type="button"
+                  >
+                    {deletingId === p.id ? "Deleting…" : "Delete"}
+                  </button>
+                </td>
               </tr>
             );
           })}
 
           {rows.length === 0 && (
             <tr>
-              <td className={styles.noData} colSpan="4">
+              <td className={styles.noData} colSpan="5">
                 No products
               </td>
             </tr>

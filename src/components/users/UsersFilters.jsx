@@ -1,4 +1,4 @@
-import styles from "../../pages/Users.module.css";
+import styles from "../../pages/Users/Users.module.css";
 
 export default function UsersFilters({ roles, filters, setFilters, onRefresh, onOpenCreate }) {
   return (

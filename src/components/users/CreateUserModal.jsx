@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Modal from "../Modal";
-import styles from "../../pages/Users.module.css";
+import styles from "../../pages/Users/Users.module.css";
 
 export default function CreateUserModal({ open, onClose, roles, onCreated, onError, doCreate }) {
   const [form, setForm] = useState({

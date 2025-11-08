@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { api } from "../lib/api";
-import { fm } from "../lib/money";
+import { api } from "../../lib/api";
+import { fm } from "../../lib/money";
 import styles from "./OrdersList.module.css";
 
 export default function OrdersList() {

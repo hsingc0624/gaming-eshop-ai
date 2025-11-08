@@ -1,13 +1,16 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useAuthContext } from "./context/AuthContext";
 import Sidebar from "./components/Sidebar";
 import LoginBar from "./components/LoginBar";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Users from "./pages/Users/Users";
+import OrderShow from "./pages/Orders/OrderShow";
+import OrdersList from "./pages/Orders/OrdersList";
+import Campaigns from "./pages/Campaigns/index";
+import CampaignCreate from "./pages/Campaigns/CampaignCreate";
 import styles from "./App.module.css";
-import AddProduct from "./pages/AddProduct";
-import Users from "./pages/Users";
-import OrderShow from "./pages/OrderShow";
-import OrdersList from "./pages/OrdersList";
 
 export default function App() {
   const { user, loading } = useAuthContext();
@@ -21,6 +24,7 @@ export default function App() {
         <div className={styles.loginPage}>
           <h1 className={styles.loginTitle}>🎮 Gaming Admin Login</h1>
           <LoginBar />
+          <ToastContainer position="top-center" autoClose={2500} />
         </div>
       );
     }
@@ -38,12 +42,16 @@ export default function App() {
 
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
           <Route path="/users" element={<Users />} />
           <Route path="/orders" element={<OrdersList />} />
           <Route path="/orders/:number" element={<OrderShow />} />
+          <Route path="/campaigns" element={<Campaigns />} />
+          <Route path="/campaigns/new" element={<CampaignCreate />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
+
+      <ToastContainer position="top-center" autoClose={2500} theme="light" />
     </div>
   );
 }

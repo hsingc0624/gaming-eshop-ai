@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import styles from "./OrderShow.module.css";
-import { fetchOrder, updateOrder, refundOrder } from "../lib/ordersApi";
-import { fm } from "../lib/money";
+import { fetchOrder, updateOrder, refundOrder } from "../../lib/ordersApi";
+import { fm } from "../../lib/money";
 
 const STATUS_OPTIONS = [
   { value: "pending", label: "Pending" },
@@ -71,7 +71,6 @@ export default function OrderShow() {
     }
   }
 
-  // ✅ 返回上一頁（有歷史就後退，冇就回 orders 列表）
   function safeBack() {
     if (window.history.length > 1) navigate(-1);
     else navigate("/orders");
@@ -82,7 +81,6 @@ export default function OrderShow() {
 
   return (
     <div className={styles.page}>
-      {/* 上方麵包屑 + 返回鍵 */}
       <div className={styles.topline}>
         <button type="button" onClick={safeBack} className={styles.backBtn}>
           ← Back

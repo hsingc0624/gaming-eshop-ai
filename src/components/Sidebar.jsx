@@ -5,6 +5,7 @@ export default function Sidebar() {
   const items = [
     { label: "Dashboard", path: "/" },
     { label: "Orders", path: "/orders" },
+    { label: "Marketing", path: "/campaigns" },
     { label: "Users", path: "/users" },
   ];
 

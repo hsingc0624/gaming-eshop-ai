@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
-import { api } from "../lib/api";
-import StatCard from "../components/StatCard";
-import ProductsTable from "../components/ProductsTable";
-import Modal from "../components/Modal";
-import AddProduct from "./AddProduct";
+import { api } from "../../lib/api";
+import StatCard from "../../components/StatCard";
+import ProductsTable from "../../components/ProductsTable";
+import Modal from "../../components/Modal";
+import AddProduct from "../AddProduct";
 import styles from "./Dashboard.module.css";
 
 export default function Dashboard() {
@@ -27,6 +27,7 @@ export default function Dashboard() {
     const params = new URLSearchParams();
     if (filters.category) params.set("category", filters.category);
     if (filters.search) params.set("search", filters.search);
+    params.set("include_inactive", "1");
     params.set("per_page", 10);
     params.set("page", String(page));
 
@@ -52,6 +53,15 @@ export default function Dashboard() {
     const active = filters.status === "active";
     return products.filter((p) => Boolean(p.is_active) === active);
   }, [products, filters.status]);
+
+  function handleDeleted(id) {
+    setProducts((prev) => prev.filter((p) => p.id !== id));
+    setTimeout(() => {
+      if (products.length === 1 && meta.current_page > 1) {
+        loadProducts(meta.current_page - 1);
+      }
+    }, 0);
+  }
 
   return (
     <div className={styles.container}>
@@ -113,7 +123,7 @@ export default function Dashboard() {
           />
         </div>
 
-        <ProductsTable rows={filtered} />
+        <ProductsTable rows={filtered} onDelete={handleDeleted} />
 
         <div className={styles.pagination}>
           <button
