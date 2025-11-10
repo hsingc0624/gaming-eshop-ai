@@ -4,8 +4,8 @@ import styles from "./LoginBar.module.css";
 
 export default function LoginBar() {
   const { user, login, logout, loading } = useAuthContext();
-  const [email, setEmail] = useState("admin@admin.com");
-  const [password, setPassword] = useState("admin");
+  const [email, setEmail] = useState("test@test.com");
+  const [password, setPassword] = useState("test");
   const [error, setError] = useState("");
 
   async function handleLogin(e) {
